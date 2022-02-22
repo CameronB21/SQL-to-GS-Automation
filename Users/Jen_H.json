@@ -1,0 +1,12 @@
+
+
+{
+  "PythonHVOtest": {
+    "tabs": {
+      "SQL Pull": "WITH ttm_revenue AS (\n\tSELECT \n\t\tdulv.region_name_long,\n\t\tau.acquisition_id,\n\t\ta.name AS acquisition_name,\n\t\tulv.unit_id,\n\t\tsuper.superownerid,\n\t\thv.contact_id AS vacasa_contact_id,\n\t\thv.first_name AS vacasa_first_name,\n\t\thv.last_name AS vacasa_last_name,\n\t\tsum(cun.prorated_rent_translated_to_usd) AS ttm_rent,\n\t\tsum(cun.prorated_fees_translated_to_usd) AS ttm_fees,\n\t\tround(ttm_rent + ttm_fees,0) AS ttm_revenue\n\tFROM core.child_unit_nights_v2 cun\n\t\tLEFT JOIN vacasa.contracts c ON cun.unit_id = c.unitid AND getdate() BETWEEN c.startdate AND c.enddate\n\t\tLEFT JOIN vacasa.owners o on c.contractid = o.contractid\n\t\tLEFT JOIN analysis_ready.homeowners_v1 hv ON o.contactid = hv.contact_id\n\t\tLEFT JOIN core.dim_unit_location_v2 dulv ON cun.unit_id = dulv.unit_id\n\t\tLEFT JOIN core.unit_lifespans_v1 ulv ON cun.unit_id = ulv.unit_id and ulv.is_latest_lifespan\n\t\tLEFT JOIN vacasa.acquisition_unit au ON cun.unit_id = au.unit_id \n\t\tLEFT JOIN vacasa.acquisition a ON au.acquisition_id = a.acquisition_id\n\t\tLEFT JOIN analysis_ready.super_owners super ON hv.contact_id = super.contactids\n\tWHERE (au.acquisition_id != 44 OR au.acquisition_id IS NULL) -- EXCLUDING non-confirmed acquisition units\n\t\tAND cun.child_unit_night_date BETWEEN dateadd(YEAR,-1,current_date) AND current_date\n\t\tAND ulv.integration_date < current_date\n\t\tAND vacasa_contact_id IS NOT NULL\n\t\tAND ulv.is_live\n\tGROUP BY 1,2,3,4,5,6,7,8\n)\nSELECT \n\tregion_name_long,\n\tacquisition_id,\n\tacquisition_name,\n\tvacasa_contact_id,\n\tsuperownerid,\n\tvacasa_first_name,\n\tvacasa_last_name,\n\tcount(DISTINCT unit_id) AS unit_count,\n\tsum(ttm_revenue) AS total_ttm_revenue,\n\tCASE \n\t\tWHEN (unit_count > 14 OR total_ttm_revenue > 240000) \n\t\tTHEN TRUE \n\t\tELSE FALSE \n\tEND AS is_potential_hvo,\n\tCASE \n\t\tWHEN superownerid IS NULL\n\t\tTHEN FALSE\n\t\tELSE TRUE\n\tEND AS already_flagged\nFROM ttm_revenue\nGROUP BY 1,2,3,4,5,6,7\nHAVING is_potential_hvo AND already_flagged IS FALSE \nORDER BY 1,2"
+	},
+    "cell_start": "A2"
+  }
+}
+
+

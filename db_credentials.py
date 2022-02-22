@@ -1,0 +1,4 @@
+user = ['YOUR USERNAME'] #REMOVE BRACKETS AND ENTER YOUR USERNAME AS A STRING
+password = ['YOUR PASSWORD'] #REMOVE BRACKETS AND ENTER YOUR PASSWORD AS STRING
+
+#Environmental variables can be used instead. See data page.
