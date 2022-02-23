@@ -6,7 +6,7 @@ Please read the Requirements and follow the instructions below before running.
 If you're not using Environmental Variables, enter your RedShift username and password into the db_credentials file
 
 Get your own client-secret.json file by following the tutorial here:
-https://blog.getcensus.com/how-to-hack-it-moving-customer-data-from-postgres-to-google-sheets-with-python/
+https://pygsheets.readthedocs.io/en/stable/authorization.html#oauth-credentials
 
 Change the path of the service file on main.py to the path for your client-secret.json
 Change the path for the User json files to match yours.
