@@ -1,0 +1,10 @@
+{
+  "Your_File": {
+    "tabs": {
+      "FIRSTTAB": "QUERY 1",
+      "SECONDTAB": "QUERY 2",
+      "THIRDTAB": "QUERY 3"
+	},
+    "cell_start": "A2"
+  }
+}
