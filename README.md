@@ -14,3 +14,5 @@ Change the path for the User json files to match yours.
 Main.py is where you start. This will open the Google Sheet, clear the contents, and access the User specific SQL saved in the USERNAME.json files.
 This will flow to the Data.py file which will run the redshift connection and the SQL query.
 Finally this returns to Main.py which will add the timestamp and inform you of completion.
+
+If you're looking to schedule this query please see the crontab instructions and links text file for more information.
