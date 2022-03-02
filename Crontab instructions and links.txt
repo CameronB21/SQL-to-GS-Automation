@@ -1,0 +1,9 @@
+If you're looking to schedule this python script, or any python script, and are using Mac or Linux your best bet will be crontab.
+Crontab can be a little tricky at times as it does not give feedback when things work or don't work. The following video is an excellent resource:
+https://www.youtube.com/watch?v=5bTkiV_Aadc
+
+crontab guru is also a great resource for making sure you're setting your scheduling correctly.
+https://crontab.guru/
+
+Please note that it is likely that you have both python 2 and python 3 installed, it's likely your script was written in python 3 so when using crontab you'll need
+to use the command "python3" rather than just "python".
